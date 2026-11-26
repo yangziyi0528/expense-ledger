@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'pmd'
+    id 'org.springframework.boot' version '3.5.16'
+}
+
+group = 'edu.nuistech'
+version = '0.1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'info.picocli:picocli:4.7.7'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyLocking {
+    lockAllConfigurations()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy tasks.named('jacocoTestReport')
+}
+
+jacoco {
+    toolVersion = '0.8.13'
+}
+
+tasks.named('jacocoTestReport') {
+    dependsOn tasks.named('test')
+    reports {
+        html.required = true
+        xml.required = true
+    }
+}
+
+pmd {
+    toolVersion = '7.13.0'
+    ruleSets = []
+    ruleSetFiles = files('config/pmd/ledger.xml')
+    consoleOutput = true
+    ignoreFailures = false
+}
+
+tasks.named('jar') {
+    enabled = false
+}

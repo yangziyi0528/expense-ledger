@@ -1,0 +1,12 @@
+.gradle/
+build/
+ledger-data/
+*.mv.db
+*.trace.db
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+output/
