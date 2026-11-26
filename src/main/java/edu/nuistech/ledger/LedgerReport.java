@@ -15,6 +15,7 @@ final class LedgerReport {
     }
 
     static List<MonthTotals> summarize(Iterable<Expense> expenses) {
+        // The outer map orders months, while each inner map accumulates matching categories.
         var months = new TreeMap<YearMonth, Map<String, BigDecimal>>();
         for (Expense expense : expenses) {
             YearMonth month = YearMonth.from(expense.date());

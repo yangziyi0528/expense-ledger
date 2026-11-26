@@ -93,6 +93,7 @@ final class LedgerStore {
     }
 
     private PreparedStatement prepare(Connection connection, String sql) throws SQLException {
+        // Keep schema creation and the command on one connection to the embedded file.
         try (var statement = connection.createStatement()) {
             statement.execute(CREATE_TABLE);
         }

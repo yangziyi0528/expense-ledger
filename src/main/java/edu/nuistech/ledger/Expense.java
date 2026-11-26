@@ -14,6 +14,7 @@ record Expense(LocalDate date, String category, BigDecimal amount, String note) 
             throw new IllegalArgumentException("Amount must be positive, at most 9999999999.99, "
                     + "and have at most two decimal places.");
         }
+        // Normalize the scale after checking precision so no amount is rounded silently.
         amount = amount.setScale(2);
         note = note.strip();
         checkText(note, "Note", 200);
