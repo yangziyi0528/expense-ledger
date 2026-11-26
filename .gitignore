@@ -1,6 +1,7 @@
 .gradle/
 build/
 ledger-data/
+example-data/
 *.mv.db
 *.trace.db
 .idea/
